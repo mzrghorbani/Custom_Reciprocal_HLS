@@ -1,0 +1,51 @@
+#!/bin/bash
+
+dirname="workspace"
+
+# echo "Is CMSSW set?" 
+# echo "    If NOT"
+# echo "    'export CMSSW=/.../CMSSW_x_x_x/src'"
+
+echo "Creating new $dirname for HLS run" 
+
+if [ ! -d $dirname ]
+then
+        mkdir -p $dirname
+else
+        rm -rf $dirname
+        mkdir -p $dirname
+fi
+
+echo "$PWD/$dirname"
+
+echo "Creating symbolic links in $dirname"
+
+# If HLS files are in CMSSW, then uncomment below;
+
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS_types.h   $dirname/LRHLS_types.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS_utility.h $dirname/LRHLS_utility.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS_top.h     $dirname/LRHLS_top.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/src/HLS/LRHLS_top.cc          $dirname/LRHLS_top.cc
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/interface/HLS/LRHLS.h         $dirname/LRHLS.h
+# ln -f -s $CMSSW/L1Trigger/TrackerTFP/src/HLS/LRHLS.cc              $dirname/LRHLS.cc
+
+ln -f -s ../Source/reciprocal_types.h   $dirname/reciprocal_types.h
+ln -f -s ../Source/reciprocal_top.h     $dirname/reciprocal_top.h
+ln -f -s ../Source/reciprocal_top.cc    $dirname/reciprocal_top.cc
+ln -f -s ../Source/lookup.h             $dirname/lookup.h
+ln -f -s ../Source/lookup.cc            $dirname/lookup.cc
+
+ln -f -s ../Testbench/reciprocal_test.cc $dirname/reciprocal_test.cc
+ln -f -s ../vivado_hls_run.tcl           $dirname/vivado_hls_run.tcl
+ln -f -s ../vivado_hls_directives.tcl    $dirname/vivado_hls_directives.tcl
+
+echo "Options:"
+echo "    cd into $dirname"
+echo "    use command:"
+echo "        'vivado_hls -f vivado_hls_run.tcl'"
+echo "    or optionally:"
+echo "        'vivado_hls -p HLS' for GUI"
+echo " "
+echo "More information in README.txt file."
+
+exit
